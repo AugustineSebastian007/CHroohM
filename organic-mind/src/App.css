@@ -1,0 +1,208 @@
+#root {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Page title styling */
+h1.text-5xl {
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+/* Main content transition when details panel is open */
+main {
+  transition: width 0.3s ease, padding-right 0.3s ease;
+  width: 100%;
+}
+
+main.details-panel-open {
+  width: calc(100% - 384px);
+  padding-right: 0;
+}
+
+/* Task checkboxes */
+.task-item input[type="checkbox"],
+input[type="checkbox"] {
+  border-radius: 50%;
+  border: 2px solid #e5e7eb;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 18px;
+  width: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.task-item input[type="checkbox"]:checked,
+input[type="checkbox"]:checked {
+  background-color: #4FC3F7;
+  border: 2px solid #4FC3F7;
+}
+
+.task-item input[type="checkbox"]:checked::after,
+input[type="checkbox"]:checked::after {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Task metadata styling */
+.task-metadata {
+  display: flex;
+  align-items: center;
+  margin-top: -4px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.task-metadata-item {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.task-metadata-date {
+  display: flex;
+  align-items: center;
+}
+
+.task-metadata-subtasks {
+  background-color: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.task-metadata-list {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+/* Task details panel styling */
+.task-details-panel {
+  height: 100vh;
+  width: 384px;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #f9f9f9;
+}
+
+.task-details-header {
+  border-bottom: 1px solid #f3f4f6;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: #f9f9f9;
+  z-index: 10;
+}
+
+.task-details-content {
+  padding: 24px;
+}
+
+.task-details-footer {
+  border-top: 1px solid #f3f4f6;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  bottom: 0;
+  background-color: #f9f9f9;
+  z-index: 10;
+}
+
+/* Form input styling */
+input:focus, 
+select:focus, 
+textarea:focus {
+  outline: none;
+  border-color: #e5e7eb;
+  box-shadow: 0 0 0 1px rgba(229, 231, 235, 0.5);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #FDD835;
+  color: #1f2937;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #f9ce0b;
+}
+
+.btn-delete {
+  color: #6b7280;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.btn-delete:hover {
+  color: #ef4444;
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
