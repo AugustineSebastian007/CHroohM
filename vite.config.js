@@ -8,5 +8,9 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
+    cssCodeSplit: false, // Generate a single CSS file
+  },
+  css: {
+    postcss: true, // Use the postcss.config.cjs in the root directory
   }
 })

@@ -92,3 +92,31 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - Design inspired by Organic Mind design system
 - Task management concepts from popular task apps like Todoist and Microsoft To Do
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+## Building for Production
+
+```bash
+# Build the application
+npm run build
+```
+
+## Deployment on Vercel
+
+This project is configured for deployment on Vercel:
+
+1. The `tailwind.config.cjs` file uses CommonJS syntax for compatibility
+2. The `postcss.config.cjs` file explicitly loads the Tailwind configuration
+3. The `vercel.json` file contains the necessary build configuration
+4. CSS is correctly processed with `cssCodeSplit: false` in the Vite config
+
+To deploy a new version, simply push to the main branch or use the Vercel CLI.
