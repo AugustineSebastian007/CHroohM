@@ -138,7 +138,7 @@ const TaskList = ({ title, tasks = [], icon: Icon, listId, tagId }) => {
       
       <div className="space-y-1">
         {filteredTasks.map((task) => (
-          <TaskItem key={task.id} task={task} />
+          <TaskItem key={task.id} task={task} isCompact={true} />
         ))}
         
         {filteredTasks.length === 0 && (

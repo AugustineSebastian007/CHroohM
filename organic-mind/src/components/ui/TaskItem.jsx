@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { FiChevronRight, FiCalendar, FiTag, FiClock, FiDivideCircle } from 'react-icons/fi';
+import { FiChevronRight, FiCalendar, FiTag, FiClock, FiList } from 'react-icons/fi';
 import useTaskStore from '../../store/useTaskStore';
 import TaskDetails from './TaskDetails';
 
-const TaskItem = ({ task }) => {
+const TaskItem = ({ task, isCompact = false }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const toggleTaskComplete = useTaskStore(state => state.toggleTaskComplete);
@@ -17,6 +17,22 @@ const TaskItem = ({ task }) => {
         time: task.dueDate.split('T')[1].substring(0, 5) // Get HH:MM format
       }
     : { date: task.dueDate, time: task.dueTime };
+
+  // Format date for display
+  const formatDate = (date) => {
+    if (!date) return '';
+    
+    // Check if date is already in DD-MM-YY format
+    if (date.includes('-')) {
+      const parts = date.split('-');
+      // If we have a date in format "14-04-25", convert to proper display
+      if (parts.length === 3) {
+        return date;
+      }
+    }
+    
+    return date;
+  };
 
   const handleCheckboxChange = () => {
     toggleTaskComplete(task.id);
@@ -46,7 +62,90 @@ const TaskItem = ({ task }) => {
     if (!task.subtasks) return null;
     return task.subtasks === 1 ? '1 Subtask' : `${task.subtasks} Subtasks`;
   };
+  
+  // Compact view (for collapsed state)
+  if (isCompact) {
+    return (
+      <div className="flex flex-col">
+        <div 
+          className="task-item flex items-center py-3 border-b border-gray-100 hover:bg-gray-50"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div className="flex-shrink-0 mx-2">
+            <input
+              type="checkbox"
+              checked={task.completed}
+              onChange={handleCheckboxChange}
+              className="h-5 w-5 rounded border-gray-300 cursor-pointer"
+            />
+          </div>
+          
+          <div className="flex-1 min-w-0">
+            <p className={`text-base ${task.completed ? 'line-through text-gray-400' : 'text-gray-800'}`}>
+              {task.todo}
+            </p>
+            
+            <div className="flex flex-wrap items-center gap-2 mt-1">
+              {dateTime.date && (
+                <div className="inline-flex items-center text-xs text-gray-500">
+                  <FiCalendar className="mr-1" size={12} />
+                  <span>{formatDate(dateTime.date)}</span>
+                </div>
+              )}
+              
+              {dateTime.time && (
+                <div className="inline-flex items-center text-xs text-gray-500">
+                  <FiClock className="mr-1" size={12} />
+                  <span>{dateTime.time}</span>
+                </div>
+              )}
+              
+              {task.subtasks > 0 && (
+                <div className="compact-subtasks-badge">
+                  {task.subtasks} {task.subtasks === 1 ? 'Subtask' : 'Subtasks'}
+                </div>
+              )}
+              
+              {task.list && (
+                <div className={`compact-list-badge ${getListColor()}`}>
+                  {task.list}
+                </div>
+              )}
+              
+              {task.tags && task.tags.length > 0 && task.tags.map((tagName, index) => (
+                <div 
+                  key={index} 
+                  className={`compact-tag-badge ${getTagColor(tagName)}`}
+                >
+                  <FiTag className="mr-1" size={10} />
+                  {tagName}
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <div className="flex-shrink-0">
+            <button 
+              className="p-1 text-gray-400 hover:text-gray-600"
+              onClick={() => setShowDetails(true)}
+            >
+              <FiChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+        
+        {showDetails && (
+          <TaskDetails 
+            taskId={task.id} 
+            onClose={() => setShowDetails(false)} 
+          />
+        )}
+      </div>
+    );
+  }
 
+  // Regular view
   return (
     <>
       <div 
@@ -85,7 +184,7 @@ const TaskItem = ({ task }) => {
           {dateTime.date && (
             <div className="task-metadata-item task-metadata-date">
               <FiCalendar className="text-gray-400 mr-1" />
-              <span>{dateTime.date}</span>
+              <span>{formatDate(dateTime.date)}</span>
             </div>
           )}
           

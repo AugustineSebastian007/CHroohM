@@ -550,3 +550,56 @@ select {
     padding-right: calc(450px + 16px);
   }
 }
+
+/* Compact task metadata styling */
+.compact-subtasks-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.7rem;
+  background-color: #f3f4f6;
+  color: #374151;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.compact-list-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.7rem;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  color: white;
+}
+
+.compact-tag-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.7rem;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  color: white;
+  background-opacity: 80%;
+}
+
+.compact-tag-badge.asap {
+  background-color: #ef4444;
+}
+
+.compact-tag-badge.quick {
+  background-color: #3b82f6;
+}
+
+.compact-list-badge.bg-accent1 {
+  background-color: #fb923c;
+}
+
+.compact-list-badge.bg-secondary {
+  background-color: #f472b6;
+}
+
+.compact-list-badge.bg-primary {
+  background-color: #60a5fa;
+}
