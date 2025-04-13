@@ -6,13 +6,19 @@
 
 @layer base {
   body {
-    @apply bg-light text-dark font-sans;
+    @apply bg-[#F5F5F5] text-dark font-sans;
   }
   
   input:focus, 
   select:focus, 
   textarea:focus {
     @apply outline-none ring-0 border-gray-200;
+  }
+}
+
+@layer utilities {
+  .bg-light {
+    background-color: #F5F5F5;
   }
 }
 
