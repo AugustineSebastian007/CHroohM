@@ -8,7 +8,12 @@ const mockTasks = [];
 const mockLists = [
   { id: 1, name: 'Personal', color: 'bg-secondary' },
   { id: 2, name: 'Work', color: 'bg-accent1' },
-  { id: 3, name: 'List 1', color: 'bg-primary' },
+];
+
+// Tags data
+const mockTags = [
+  { id: 1, name: 'Tag 1', color: 'bg-accent1' },
+  { id: 2, name: 'Tag 2', color: 'bg-secondary' },
 ];
 
 const useTaskStore = create(
@@ -16,6 +21,7 @@ const useTaskStore = create(
     (set, get) => ({
       tasks: mockTasks,
       lists: mockLists,
+      tags: mockTags,
       loading: false,
       error: null,
       
@@ -222,6 +228,64 @@ const useTaskStore = create(
       // Get tasks by list
       getTasksByList: (listName) => {
         return get().tasks.filter(task => task.list === listName);
+      },
+      
+      // Get all tags
+      getTags: () => {
+        return get().tags;
+      },
+      
+      // Add a new tag
+      addTag: (tag) => {
+        set((state) => {
+          const newTag = {
+            ...tag,
+            id: Math.max(0, ...state.tags.map(t => t.id)) + 1
+          };
+          
+          return { tags: [...state.tags, newTag] };
+        });
+      },
+      
+      // Update a tag
+      updateTag: (tagId, updatedTag) => {
+        set((state) => ({
+          tags: state.tags.map((tag) => 
+            tag.id === tagId ? { ...tag, ...updatedTag } : tag
+          )
+        }));
+      },
+      
+      // Delete a tag
+      deleteTag: (tagId) => {
+        const tagName = get().tags.find(t => t.id === tagId)?.name;
+        
+        // First update any tasks that have this tag
+        if (tagName) {
+          set((state) => ({
+            tasks: state.tasks.map(task => {
+              if (task.tags && task.tags.includes(tagName)) {
+                return {
+                  ...task,
+                  tags: task.tags.filter(t => t !== tagName)
+                };
+              }
+              return task;
+            })
+          }));
+        }
+        
+        // Then remove the tag
+        set((state) => ({
+          tags: state.tags.filter((tag) => tag.id !== tagId)
+        }));
+      },
+      
+      // Get tasks by tag
+      getTasksByTag: (tagName) => {
+        return get().tasks.filter(task => 
+          task.tags && task.tags.includes(tagName)
+        );
       },
       
       // Get tasks for today (no due date or due date is today)

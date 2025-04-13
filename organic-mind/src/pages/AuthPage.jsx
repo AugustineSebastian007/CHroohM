@@ -11,7 +11,8 @@ const AuthPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // For demo purposes, we'll just navigate to the main app
+    // For demo purposes, we'll just set a flag in localStorage
+    localStorage.setItem('isAuthenticated', 'true');
     navigate('/');
   };
 

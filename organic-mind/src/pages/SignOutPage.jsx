@@ -4,7 +4,8 @@ const SignOutPage = () => {
   const navigate = useNavigate();
   
   const handleSignOut = () => {
-    // Add any sign out logic here (clearing tokens, etc.)
+    // Clear authentication state
+    localStorage.removeItem('isAuthenticated');
     // Then navigate to auth page
     navigate('/auth');
   };
