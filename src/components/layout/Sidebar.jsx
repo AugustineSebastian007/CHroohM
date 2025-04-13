@@ -551,21 +551,13 @@ const Sidebar = () => {
             </div>
             
             <div className="mt-auto">
-              <button 
-                className="flex items-center py-2 px-1 text-gray-800 w-full"
-                onClick={() => {
-                  if (window.confirm('Are you sure you want to reset all tasks? This cannot be undone.')) {
-                    resetTasks();
-                  }
-                }}
+              <Link 
+                to="/settings" 
+                className={`flex items-center py-2 px-1 text-gray-800 w-full ${isActive('/settings') ? 'bg-gray-200 rounded' : ''}`}
               >
-                <FiRefreshCw className="text-base mr-2" />
-                <span>Reset Tasks</span>
-              </button>
-              <button className="flex items-center py-2 px-1 text-gray-800 w-full">
                 <FiSettings className="text-base mr-2" />
                 <span>Settings</span>
-              </button>
+              </Link>
               <button 
                 className="flex items-center py-2 px-1 text-gray-800 w-full"
                 onClick={() => navigate('/sign-out')}

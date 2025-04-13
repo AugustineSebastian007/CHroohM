@@ -6,8 +6,10 @@ const SignOutPage = () => {
   const handleSignOut = () => {
     // Clear authentication state
     localStorage.removeItem('isAuthenticated');
+    // Trigger storage event to notify App.jsx
+    window.dispatchEvent(new Event('storage'));
     // Then navigate to auth page
-    navigate('/auth');
+    navigate('/auth', { replace: true });
   };
   
   const handleCancel = () => {

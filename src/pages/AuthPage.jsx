@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 
@@ -8,12 +8,27 @@ const AuthPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  
+  // Check if already authenticated
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // For demo purposes, we'll just set a flag in localStorage
+    
+    // For demo purposes, we'll accept any email/password combination
+    // Set the authentication flag in localStorage
     localStorage.setItem('isAuthenticated', 'true');
-    navigate('/');
+    
+    // Force a storage event for App.jsx to detect the change
+    window.dispatchEvent(new Event('storage'));
+    
+    // Navigate to the home/today page
+    navigate('/', { replace: true });
   };
 
   const togglePasswordVisibility = () => {

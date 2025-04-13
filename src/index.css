@@ -69,3 +69,48 @@
     @apply opacity-0;
   }
 }
+
+/* Dark theme support */
+.dark-theme {
+  --color-bg-primary: #1a1a1a;
+  --color-bg-secondary: #2d2d2d;
+  --color-text-primary: #f7f7f7;
+  --color-text-secondary: #e0e0e0;
+  --color-border: #444;
+  
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+.dark-theme .bg-white {
+  background-color: var(--color-bg-secondary);
+}
+
+.dark-theme .text-gray-800 {
+  color: var(--color-text-primary);
+}
+
+.dark-theme .text-gray-700 {
+  color: var(--color-text-secondary);
+}
+
+.dark-theme .border-gray-200 {
+  border-color: var(--color-border);
+}
+
+.dark-theme .bg-gray-50 {
+  background-color: #3a3a3a;
+}
+
+.dark-theme .bg-gray-100 {
+  background-color: #333;
+}
+
+.dark-theme .bg-gray-200 {
+  background-color: #444;
+}
+
+/* Settings page toggle switches - updated styling */
+.dark-theme .bg-yellow-400 {
+  background-color: #FFD700;
+}
