@@ -19,6 +19,7 @@ import {
   parseISO
 } from 'date-fns';
 import useTaskStore from '../store/useTaskStore';
+import TaskDetails from '../components/ui/TaskDetails';
 
 // CSS for hiding scrollbars
 const hideScrollbarStyle = {
@@ -32,6 +33,7 @@ const CalendarPage = () => {
   const [viewMode, setViewMode] = useState('day'); // 'day', 'week', or 'month'
   const [filterStatus, setFilterStatus] = useState('all'); // 'all', 'completed', 'pending'
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [showTaskDetails, setShowTaskDetails] = useState(false);
   const tasks = useTaskStore(state => state.tasks);
   const loading = useTaskStore(state => state.loading);
   const error = useTaskStore(state => state.error);
@@ -629,7 +631,10 @@ const CalendarPage = () => {
         </h1>
         
         <div className="flex items-center">
-          <button className="px-4 py-2 text-gray-600 border border-gray-300 rounded hover:bg-gray-50 font-medium">
+          <button 
+            className="px-4 py-2 text-gray-600 border border-gray-300 rounded hover:bg-gray-50 font-medium"
+            onClick={() => setShowTaskDetails(true)}
+          >
             Add Event
           </button>
         </div>
@@ -816,6 +821,14 @@ const CalendarPage = () => {
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mt-4">
           <p>{error}</p>
         </div>
+      )}
+
+      {/* Add TaskDetails component */}
+      {showTaskDetails && (
+        <TaskDetails 
+          taskId={null} // Passing null indicates creating a new task
+          onClose={() => setShowTaskDetails(false)} 
+        />
       )}
     </div>
   );

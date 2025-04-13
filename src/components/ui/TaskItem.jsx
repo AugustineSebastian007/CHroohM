@@ -77,7 +77,7 @@ const TaskItem = ({ task, isCompact = false }) => {
               type="checkbox"
               checked={task.completed}
               onChange={handleCheckboxChange}
-              className="h-5 w-5 rounded border-gray-300 cursor-pointer"
+              className="h-5 w-5 rounded border-gray-300 cursor-pointer focus:ring-1 focus:ring-gray-300 focus:ring-offset-1"
             />
           </div>
           
@@ -127,7 +127,7 @@ const TaskItem = ({ task, isCompact = false }) => {
           
           <div className="flex-shrink-0">
             <button 
-              className="p-1 text-gray-400 hover:text-gray-600"
+              className="p-1 text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600 focus:ring-1 focus:ring-gray-300 rounded"
               onClick={() => setShowDetails(true)}
             >
               <FiChevronRight className="h-5 w-5" />
@@ -158,7 +158,7 @@ const TaskItem = ({ task, isCompact = false }) => {
             type="checkbox"
             checked={task.completed}
             onChange={handleCheckboxChange}
-            className="h-5 w-5 rounded border-gray-300 cursor-pointer"
+            className="h-5 w-5 rounded border-gray-300 cursor-pointer focus:ring-1 focus:ring-gray-300 focus:ring-offset-1"
           />
         </div>
         
@@ -170,7 +170,7 @@ const TaskItem = ({ task, isCompact = false }) => {
         
         <div className="flex-shrink-0">
           <button 
-            className="p-1 text-gray-400 hover:text-gray-600"
+            className="p-1 text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600 focus:ring-1 focus:ring-gray-300 rounded"
             onClick={() => setShowDetails(true)}
           >
             <FiChevronRight className="h-5 w-5" />

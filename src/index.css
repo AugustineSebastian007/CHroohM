@@ -77,6 +77,7 @@
   --color-text-primary: #f7f7f7;
   --color-text-secondary: #e0e0e0;
   --color-border: #444;
+  --color-focus-border: #6b6b6b;
   
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
@@ -110,7 +111,599 @@
   background-color: #444;
 }
 
+/* Fix focus styles for dark mode */
+.dark-theme input:focus,
+.dark-theme select:focus,
+.dark-theme textarea:focus {
+  outline: none;
+  border-color: var(--color-focus-border);
+  box-shadow: 0 0 0 1px rgba(107, 107, 107, 0.5);
+}
+
+.dark-theme .focus-within\:border-gray-300:focus-within {
+  border-color: var(--color-focus-border);
+}
+
+.dark-theme .focus\:ring-gray-300:focus,
+.dark-theme .focus-within\:ring-gray-300:focus-within {
+  --tw-ring-color: var(--color-focus-border);
+}
+
+.dark-theme .focus\:text-gray-600:focus {
+  color: var(--color-text-secondary);
+}
+
+.dark-theme .focus\:ring-offset-1:focus {
+  --tw-ring-offset-color: var(--color-bg-secondary);
+}
+
+/* Fix hover states for dark mode */
+.dark-theme .hover\:bg-gray-50:hover {
+  background-color: #3a3a3a;
+}
+
 /* Settings page toggle switches - updated styling */
 .dark-theme .bg-yellow-400 {
   background-color: #FFD700;
+}
+
+.dark-theme .border-gray-100 {
+  border-color: #333;
+}
+
+.dark-theme .border-gray-200 {
+  border-color: var(--color-border);
+}
+
+/* Fix dividers and borders in dark mode */
+.dark-theme .border-b {
+  border-color: #333;
+}
+
+.dark-theme .metadata-divider {
+  background-color: #444;
+}
+
+.dark-theme .task-metadata {
+  border-bottom-color: #333;
+}
+
+/* Fix calendar text colors in dark mode */
+.dark-theme .bg-red-100,
+.dark-theme .bg-blue-100,
+.dark-theme .bg-yellow-100 {
+  color: #121212;
+}
+
+.dark-theme .text-gray-500 {
+  color: #aaaaaa;
+}
+
+.dark-theme .text-gray-600 {
+  color: #cccccc;
+}
+
+.dark-theme .text-xs {
+  color: var(--color-text-secondary);
+}
+
+.dark-theme .bg-gray-100.text-gray-800 {
+  color: var(--color-text-primary);
+}
+
+.dark-theme .bg-white.shadow-sm .text-gray-600 {
+  color: var(--color-text-secondary);
+}
+
+/* Fix calendar specific elements */
+.dark-theme .rounded-md p {
+  color: #121212 !important;
+}
+
+.dark-theme .font-bold.text-gray-800 {
+  color: var(--color-text-primary);
+}
+
+.dark-theme .font-medium.text-gray-600,
+.dark-theme .font-medium.text-gray-700 {
+  color: var(--color-text-secondary);
+}
+
+/* Make sure time indicators are visible */
+.dark-theme .border-r .text-gray-600,
+.dark-theme .border-r .text-gray-500 {
+  color: #cccccc;
+}
+
+/* Ensure all calendar cells have visible text */
+.dark-theme [class*="grid-cols"] [class*="border"] {
+  color: var(--color-text-primary);
+}
+
+/* Month view day numbers */
+.dark-theme .text-left.font-bold.mb-1.text-gray-800 {
+  color: var(--color-text-primary);
+}
+
+/* Calendar event text */
+.dark-theme .truncate.text-gray-800 {
+  color: #121212;
+}
+
+/* Fix button text in dark mode */
+.dark-theme button.text-gray-600,
+.dark-theme button.text-gray-700 {
+  color: var(--color-text-secondary);
+}
+
+/* Calendar day/month names */
+.dark-theme .text-center .text-xs.font-bold.text-gray-800,
+.dark-theme .text-center .text-sm.text-gray-600 {
+  color: var(--color-text-secondary);
+}
+
+/* Current date highlight */
+.dark-theme .bg-gray-200 .text-base {
+  color: var(--color-text-primary);
+}
+
+/* Calendar empty state */
+.dark-theme .text-center.py-12 {
+  color: var(--color-text-secondary);
+}
+
+.dark-theme .text-center.py-12 .text-gray-600 {
+  color: var(--color-text-secondary);
+}
+
+.dark-theme .text-center.py-12 .text-gray-500 {
+  color: #aaaaaa;
+}
+
+/* Filter dropdown items */
+.dark-theme .px-3.py-2.cursor-pointer {
+  color: var(--color-text-secondary);
+}
+
+/* Month view specific colors */
+.dark-theme .bg-gray-50 .text-base {
+  color: #999;
+}
+
+/* Sticky Notes dark mode fixes */
+.dark-theme .bg-pink-100,
+.dark-theme .bg-orange-100,
+.dark-theme .bg-green-100,
+.dark-theme .bg-purple-100 {
+  color: #121212;
+}
+
+.dark-theme .whitespace-pre-line.leading-relaxed.text-gray-700 {
+  color: #121212;
+}
+
+.dark-theme .text-gray-800.mb-3 {
+  color: #121212;
+}
+
+/* Sticky note modal and form fixes */
+.dark-theme .text-gray-600.mb-6 {
+  color: var(--color-text-secondary);
+}
+
+.dark-theme .bg-white .text-gray-700 {
+  color: var(--color-text-secondary);
+}
+
+.dark-theme .bg-white .text-gray-500 {
+  color: #aaaaaa;
+}
+
+.dark-theme input::placeholder, 
+.dark-theme textarea::placeholder {
+  color: #666;
+}
+
+/* Sticky note empty state */
+.dark-theme .text-2xl.font-semibold.text-gray-700 {
+  color: var(--color-text-secondary);
+}
+
+/* Sticky note color selector */
+.dark-theme .text-sm.font-medium.text-gray-700 {
+  color: var(--color-text-secondary);
+}
+
+/* Sticky note headers */
+.dark-theme .text-xl.font-bold.text-gray-800 {
+  color: var(--color-text-primary);
+}
+
+/* Sticky note buttons hover states */
+.dark-theme .hover\:bg-gray-100:hover {
+  background-color: #333;
+}
+
+.dark-theme .hover\:text-gray-700:hover {
+  color: var(--color-text-primary);
+}
+
+/* Focus styles for sticky note inputs and textareas */
+.dark-theme .focus\:ring-primary:focus {
+  --tw-ring-color: rgba(255, 216, 53, 0.5);
+}
+
+/* Sticky note editor buttons */
+.dark-theme .text-gray-500.hover\:text-gray-700,
+.dark-theme .text-gray-600.hover\:text-blue-500,
+.dark-theme .text-gray-600.hover\:text-red-500 {
+  color: #aaaaaa;
+}
+
+.dark-theme .text-gray-600.hover\:text-blue-500:hover {
+  color: #60a5fa !important;
+}
+
+.dark-theme .text-gray-600.hover\:text-red-500:hover {
+  color: #f87171 !important;
+}
+
+/* Sticky Wall header text fixes */
+.dark-theme h1.text-3xl.font-bold.text-gray-800 {
+  color: var(--color-text-primary);
+}
+
+.dark-theme .bg-primary.bg-opacity-10.text-primary {
+  background-color: rgba(255, 216, 53, 0.2);
+  color: #FFD700;
+}
+
+/* Sticky Note titles */
+.dark-theme .font-bold.text-lg {
+  color: #121212;
+}
+
+/* Make note titles more explicit and ensure proper visibility */
+.dark-theme .bg-blue-100 .font-bold.text-lg.mb-3,
+.dark-theme .bg-yellow-100 .font-bold.text-lg.mb-3,
+.dark-theme .bg-pink-100 .font-bold.text-lg.mb-3,
+.dark-theme .bg-orange-100 .font-bold.text-lg.mb-3,
+.dark-theme .bg-green-100 .font-bold.text-lg.mb-3,
+.dark-theme .bg-purple-100 .font-bold.text-lg.mb-3,
+.dark-theme .bg-gray-100 .font-bold.text-lg.mb-3 {
+  color: #121212 !important;
+  font-weight: 700;
+}
+
+/* Fix sticky note action buttons (edit/delete) with higher specificity */
+.dark-theme .group-hover\:opacity-100 .p-1\\.5.bg-white.bg-opacity-80 {
+  background-color: rgba(230, 230, 230, 0.95);
+}
+
+.dark-theme button.p-1\\.5.bg-white.bg-opacity-80:hover {
+  background-color: rgba(255, 255, 255, 1) !important;
+}
+
+/* Fix Add Note button */
+.dark-theme .bg-primary.text-white {
+  color: #121212;
+}
+
+/* "Add Note" text in button */
+.dark-theme .bg-primary.text-white svg.mr-2 {
+  color: #121212;
+}
+
+/* Group hover for edit/delete buttons */
+.dark-theme .opacity-0.group-hover\:opacity-100 {
+  opacity: 0;
+}
+
+.dark-theme .opacity-0.group-hover\:opacity-100:hover,
+.dark-theme .group:hover .opacity-0.group-hover\:opacity-100 {
+  opacity: 1 !important;
+}
+
+/* Edit and delete buttons with more specific selectors */
+.dark-theme .absolute.top-3.right-3 button {
+  background-color: white !important;
+}
+
+.dark-theme .absolute.top-3.right-3 button svg {
+  color: #333 !important;
+}
+
+.dark-theme .absolute.top-3.right-3 button:hover {
+  background-color: white !important;
+}
+
+.dark-theme .absolute.top-3.right-3 button:first-child:hover svg {
+  color: #3b82f6 !important;
+}
+
+.dark-theme .absolute.top-3.right-3 button:last-child:hover svg {
+  color: #ef4444 !important;
+}
+
+/* Task Details Panel - Dark Mode */
+.dark-theme .task-details-panel {
+  background-color: #3a3a3a; /* Match sidebar color in dark mode */
+  border-color: var(--color-border);
+}
+
+.dark-theme .task-details-header {
+  background-color: #3a3a3a; /* Match sidebar */
+}
+
+.dark-theme .task-details-content {
+  background-color: #3a3a3a; /* Match sidebar */
+}
+
+.dark-theme .task-details-footer {
+  background-color: #3a3a3a; /* Match sidebar */
+}
+
+/* Task details inputs and textareas */
+.dark-theme .task-details-content textarea,
+.dark-theme .task-details-content input[type="text"] {
+  background-color: transparent !important;
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+/* Fix task description textarea */
+.dark-theme .task-details-content textarea.bg-gray-100 {
+  background-color: transparent !important;
+  color: var(--color-text-primary);
+}
+
+/* Fix select dropdown and date/time pickers */
+.dark-theme .task-details-content select.bg-gray-100,
+.dark-theme .task-details-content .date-picker,
+.dark-theme .task-details-content .time-picker {
+  background-color: transparent !important;
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+/* Calendar and time picker popups */
+.dark-theme .calendar-popup,
+.dark-theme .time-dropdown {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border);
+}
+
+.dark-theme .time-dropdown div:hover,
+.dark-theme .calendar-popup button:hover {
+  background-color: #444;
+}
+
+/* Subtasks */
+.dark-theme .task-details-content input.border-b.border-gray-100 {
+  border-color: #444;
+}
+
+/* Fix tag selector */
+.dark-theme .bg-white.border.border-gray-200.rounded-lg {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border);
+}
+
+/* Task details footer buttons */
+.dark-theme .task-details-footer button.py-2.px-4 {
+  color: #cccccc;
+}
+
+.dark-theme .task-details-footer button.py-2.px-4:hover {
+  color: #ef4444;
+}
+
+.dark-theme .task-details-footer button.bg-yellow-400 {
+  background-color: #FFD700;
+  color: #121212;
+}
+
+.dark-theme .task-details-footer button.bg-yellow-400:hover {
+  background-color: #f7ce00;
+}
+
+/* Tag elements in task details */
+.dark-theme .bg-opacity-20.rounded-full.px-3.py-1.text-sm.text-gray-700 {
+  color: var(--color-text-secondary);
+}
+
+.dark-theme .text-sm.text-gray-500,
+.dark-theme .text-sm.text-gray-600 {
+  color: #aaaaaa;
+}
+
+/* New tag creator */
+.dark-theme .border.border-blue-300 {
+  border-color: #3b82f6;
+  background-color: #333;
+}
+
+.dark-theme .border.border-blue-300 input.text-gray-800 {
+  color: var(--color-text-primary);
+}
+
+/* Tag color buttons - match transparency */
+.dark-theme .bg-gray-50.hover\:bg-gray-100 {
+  background-color: transparent;
+}
+
+.dark-theme .bg-gray-50.hover\:bg-gray-100:hover {
+  background-color: rgba(68, 68, 68, 0.5);
+}
+
+/* Calendar days */
+.dark-theme .calendar-popup .text-xs.font-medium.text-gray-500 {
+  color: #aaaaaa;
+}
+
+.dark-theme .calendar-popup button.w-8.h-8 {
+  color: var(--color-text-primary);
+}
+
+/* Fix borders for tag selector sections */
+.dark-theme .border-b.border-gray-100.pb-2 {
+  border-color: #444;
+}
+
+.dark-theme .p-2.border.border-gray-200.rounded-lg {
+  border-color: var(--color-border);
+  background-color: #333;
+}
+
+/* Color picker */
+.dark-theme .mt-2.p-2.bg-white.border.border-gray-200 {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border);
+}
+
+/* Subtask checkbox */
+.dark-theme .task-details-content .h-5.w-5.rounded.border-gray-300 {
+  border-color: #666;
+}
+
+/* Add subtask button */
+.dark-theme .text-sm.text-gray-600.py-1 {
+  color: #aaaaaa;
+}
+
+/* Task details close button */
+.dark-theme .task-details-header button.text-gray-400:hover {
+  color: var(--color-text-primary);
+}
+
+/* Fix Task title and labels */
+.dark-theme .text-lg.font-medium.text-gray-700 {
+  color: var(--color-text-secondary);
+}
+
+.dark-theme .task-details-content label.text-gray-600 {
+  color: var(--color-text-secondary);
+}
+
+/* Style task title input with specific selector */
+.dark-theme .task-details-content input.w-full.p-2.text-lg.bg-transparent.text-gray-800 {
+  color: var(--color-text-primary) !important;
+  background-color: transparent !important;
+}
+
+/* Fix tag selector items */
+.dark-theme .rounded-full.px-3.py-1.text-sm.flex.items-center.gap-1 {
+  color: var(--color-text-primary);
+}
+
+.dark-theme .text-gray-400.hover\:text-gray-600 {
+  color: #aaaaaa;
+}
+
+.dark-theme .text-gray-400.hover\:text-gray-600:hover {
+  color: var(--color-text-primary);
+}
+
+/* Fix background opacity for selected tags in dark mode */
+.dark-theme .bg-opacity-100.text-white {
+  background-opacity: 0.6;
+}
+
+/* Fix subtask headings */
+.dark-theme .text-xl.font-bold.text-gray-800.mb-3 {
+  color: var(--color-text-primary);
+}
+
+/* Fix subtask inputs */
+.dark-theme .flex-1.p-1.border-b.border-gray-100.focus\:outline-none.bg-transparent {
+  border-color: #444;
+  color: var(--color-text-primary);
+}
+
+/* Task Details Panel Styling - Light and Dark Mode */
+.task-details-panel {
+  background-color: #f1f5f9; /* Match sidebar color in light mode */
+  border: 1px solid #e5e7eb;
+}
+
+.task-details-header, 
+.task-details-content,
+.task-details-footer {
+  background-color: #f1f5f9; /* Match sidebar */
+}
+
+/* Make inputs and selectors transparent in both light and dark modes */
+.task-details-content textarea,
+.task-details-content input[type="text"],
+.task-details-content select {
+  background-color: transparent !important;
+}
+
+/* Calendar and time picker popups - transparent in dark mode */
+.dark-theme .calendar-popup,
+.dark-theme .time-dropdown {
+  background-color: #3a3a3a;
+  border-color: var(--color-border);
+}
+
+/* Tag selector in dark mode - transparent background */
+.dark-theme .bg-white.border.border-gray-200.rounded-lg {
+  background-color: transparent;
+  border-color: var(--color-border);
+}
+
+/* New tag creator - transparent in dark mode */
+.dark-theme .border.border-blue-300 {
+  border-color: #3b82f6;
+  background-color: transparent;
+}
+
+/* Color picker in dark mode */
+.dark-theme .mt-2.p-2.bg-white.border.border-gray-200 {
+  background-color: transparent;
+  border-color: var(--color-border);
+}
+
+/* Tag container in dark mode */
+.dark-theme .p-2.border.border-gray-200.rounded-lg {
+  border-color: var(--color-border);
+  background-color: transparent;
+}
+
+/* Calendar days hover */
+.dark-theme .calendar-popup button.w-8.h-8:hover {
+  background-color: rgba(68, 68, 68, 0.5);
+}
+
+/* Time dropdown items */
+.dark-theme .time-dropdown div {
+  background-color: transparent;
+}
+
+.dark-theme .time-dropdown div:hover {
+  background-color: rgba(68, 68, 68, 0.5);
+}
+
+/* Subtask items */
+.dark-theme .task-details-content .space-y-3 {
+  background-color: transparent;
+}
+
+/* Make sure task title field is completely transparent */
+.task-details-content input[type="text"].w-full.p-2.text-lg {
+  background-color: transparent !important;
+  border: none;
+}
+
+/* Fix date/time picker backgrounds in light mode too */
+.task-details-content .date-picker,
+.task-details-content .time-picker {
+  background-color: transparent !important;
+}
+
+/* Calendar popup and time dropdown in light mode */
+.calendar-popup,
+.time-dropdown {
+  background-color: #f1f5f9;
+  border-color: #e5e7eb;
 }

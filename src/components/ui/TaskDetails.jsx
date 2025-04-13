@@ -7,17 +7,19 @@ const TaskDetails = ({ taskId, onClose }) => {
   const tasks = useTaskStore(state => state.tasks);
   const updateTask = useTaskStore(state => state.updateTask);
   const deleteTask = useTaskStore(state => state.deleteTask);
+  const addTask = useTaskStore(state => state.addTask);
   const storeTags = useTaskStore(state => state.tags);
   const addTag = useTaskStore(state => state.addTag);
   
   const [task, setTask] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [isNewTask, setIsNewTask] = useState(taskId === null);
   const [editedTask, setEditedTask] = useState({
     todo: '',
     description: '',
     dueDate: '',
     dueTime: '',
-    list: '',
+    list: 'Personal',
     tags: [],
     subtasks: 0,
     subtasksList: [],
@@ -67,34 +69,65 @@ const TaskDetails = ({ taskId, onClose }) => {
   }, []);
   
   useEffect(() => {
-    const foundTask = tasks.find(t => t.id === taskId);
-    if (foundTask) {
-      // Extract date and time from combined dueDate if available
-      let dueDate = '';
-      let dueTime = '';
-      
-      if (foundTask.dueDate) {
-        // Check if the dueDate contains time information (has a T separator)
-        if (foundTask.dueDate.includes('T')) {
-          const [datePart, timePart] = foundTask.dueDate.split('T');
-          dueDate = datePart;
-          dueTime = timePart;
-        } else {
-          dueDate = foundTask.dueDate;
-        }
-      }
-      
-      setTask(foundTask);
-      setEditedTask({
-        todo: foundTask.todo,
-        description: foundTask.description || '',
-        dueDate: dueDate,
-        dueTime: dueTime || foundTask.dueTime || '',
-        list: foundTask.list || 'Personal',
-        tags: foundTask.tags || [],
-        subtasks: foundTask.subtasks || 0,
-        subtasksList: foundTask.subtasksList || [],
+    if (taskId === null) {
+      // Creating a new task
+      setIsNewTask(true);
+      setTask({
+        todo: '',
+        description: '',
+        dueDate: '',
+        dueTime: '',
+        list: 'Personal',
+        tags: [],
+        subtasks: 0,
+        subtasksList: [],
       });
+      // Default date to today (formatted as DD-MM-YY)
+      const today = new Date();
+      const day = String(today.getDate()).padStart(2, '0');
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const year = String(today.getFullYear()).slice(-2);
+      setEditedTask({
+        todo: '',
+        description: '',
+        dueDate: `${day}-${month}-${year}`,
+        dueTime: '',
+        list: 'Personal',
+        tags: [],
+        subtasks: 0,
+        subtasksList: [],
+      });
+    } else {
+      // Editing an existing task
+      const foundTask = tasks.find(t => t.id === taskId);
+      if (foundTask) {
+        // Extract date and time from combined dueDate if available
+        let dueDate = '';
+        let dueTime = '';
+        
+        if (foundTask.dueDate) {
+          // Check if the dueDate contains time information (has a T separator)
+          if (foundTask.dueDate.includes('T')) {
+            const [datePart, timePart] = foundTask.dueDate.split('T');
+            dueDate = datePart;
+            dueTime = timePart;
+          } else {
+            dueDate = foundTask.dueDate;
+          }
+        }
+        
+        setTask(foundTask);
+        setEditedTask({
+          todo: foundTask.todo,
+          description: foundTask.description || '',
+          dueDate: dueDate,
+          dueTime: dueTime || foundTask.dueTime || '',
+          list: foundTask.list || 'Personal',
+          tags: foundTask.tags || [],
+          subtasks: foundTask.subtasks || 0,
+          subtasksList: foundTask.subtasksList || [],
+        });
+      }
     }
   }, [taskId, tasks]);
   
@@ -118,7 +151,7 @@ const TaskDetails = ({ taskId, onClose }) => {
     };
   }, []);
   
-  if (!task) {
+  if (!task && !isNewTask) {
     return null;
   }
   
@@ -144,7 +177,14 @@ const TaskDetails = ({ taskId, onClose }) => {
       subtasks: editedTask.subtasksList.length,
     };
     
-    updateTask(taskId, updatedTask);
+    if (isNewTask) {
+      // Add new task
+      addTask(updatedTask);
+    } else {
+      // Update existing task
+      updateTask(taskId, updatedTask);
+    }
+    
     handleClose();
   };
   
@@ -262,7 +302,7 @@ const TaskDetails = ({ taskId, onClose }) => {
     <div className={`task-details-panel-wrapper ${isPanelOpen ? 'open' : ''}`}>
       <div className="task-details-panel shadow-lg h-full">
         <div className="task-details-header">
-          <h3 className="text-lg font-medium text-gray-700">Task:</h3>
+          <h3 className="text-lg font-medium text-gray-700">{isNewTask ? 'New Event:' : 'Task:'}</h3>
           <button onClick={handleClose} className="text-gray-400 hover:text-gray-500">
             <FiX className="h-5 w-5" />
           </button>
@@ -563,17 +603,22 @@ const TaskDetails = ({ taskId, onClose }) => {
         </div>
         
         <div className="task-details-footer">
-          <button
-            onClick={handleDelete}
-            className="py-2 px-4 text-gray-700 hover:text-red-500 font-medium"
-          >
-            Delete Task
-          </button>
+          {!isNewTask && (
+            <button
+              onClick={handleDelete}
+              className="py-2 px-4 text-gray-700 hover:text-red-500 font-medium"
+            >
+              Delete Task
+            </button>
+          )}
+          {isNewTask && (
+            <div></div> // Empty div to maintain flex spacing
+          )}
           <button
             onClick={handleSave}
             className="py-2 px-6 bg-yellow-400 text-yellow-900 rounded-md hover:bg-yellow-300 font-medium"
           >
-            Save changes
+            {isNewTask ? 'Add Event' : 'Save changes'}
           </button>
         </div>
       </div>

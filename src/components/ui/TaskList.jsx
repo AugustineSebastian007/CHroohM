@@ -70,7 +70,7 @@ const TaskList = ({ title, tasks = [], icon: Icon, listId, tagId }) => {
           {tasks.length > 0 && (
             <div className="relative">
               <button
-                className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 rounded bg-white hover:bg-gray-50 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 rounded bg-white hover:bg-gray-50 transition-colors focus:outline-none focus:ring-1 focus:ring-gray-300"
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
               >
                 <FiFilter className="text-gray-500" size={16} />
@@ -115,11 +115,11 @@ const TaskList = ({ title, tasks = [], icon: Icon, listId, tagId }) => {
       )}
       
       <div className="mb-8">
-        <div className="flex items-center border border-gray-200 rounded-md hover:shadow-sm focus-within:border-gray-300">
+        <div className="flex items-center border border-gray-200 rounded-md hover:shadow-sm focus-within:border-gray-300 focus-within:ring-1 focus-within:ring-opacity-50 focus-within:ring-gray-300">
           <button
             type="button"
             onClick={handleAddTask}
-            className="p-3 text-gray-400 hover:text-gray-600"
+            className="p-3 text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600"
             aria-label="Add new task"
           >
             <FiPlus className="h-5 w-5" />
@@ -130,7 +130,7 @@ const TaskList = ({ title, tasks = [], icon: Icon, listId, tagId }) => {
               placeholder={`Add task${listId ? ' to ' + title : ''}${tagId ? ' with tag ' + title : ''}`}
               value={newTaskText}
               onChange={(e) => setNewTaskText(e.target.value)}
-              className="w-full p-2 focus:outline-none text-gray-700"
+              className="w-full p-2 focus:outline-none text-gray-700 bg-transparent"
             />
           </form>
         </div>
