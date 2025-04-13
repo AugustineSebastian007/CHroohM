@@ -55,7 +55,7 @@ const SignOutPage = () => {
           <div className="space-y-4">
             <button
               onClick={handleSignOut}
-              className="w-full bg-primary hover:bg-primary/90 text-dark font-medium py-3 px-4 rounded-md"
+              className="w-full bg-primary hover:bg-primary/90 text-[#121212] font-medium py-3 px-4 rounded-md"
             >
               Sign out
             </button>

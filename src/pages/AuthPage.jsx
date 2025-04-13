@@ -87,7 +87,7 @@ const AuthPage = () => {
             
             <button
               type="submit"
-              className="w-full bg-primary hover:bg-primary/90 text-dark font-medium py-3 px-4 rounded-md"
+              className="w-full bg-primary hover:bg-primary/90 text-[#121212] font-medium py-3 px-4 rounded-md"
             >
               {isSignIn ? 'Sign in' : 'Get Started'}
             </button>
