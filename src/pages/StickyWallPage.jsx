@@ -25,8 +25,42 @@ const StickyWallPage = () => {
 
   // Initialize notes if needed on first load
   useEffect(() => {
-    initializeNotes();
-  }, []); // Empty dependency array to run only once
+    // Only initialize if no notes exist
+    if (notes.length === 0) {
+      // Add sample notes for demo purposes
+      const sampleNotes = [
+        {
+          id: '1',
+          title: 'Social Media',
+          content: '- Plan social content\n- Build content calendar\n- Plan promotion and distribution',
+          color: 'bg-yellow-100'
+        },
+        {
+          id: '2',
+          title: 'Content Strategy',
+          content: 'Would need time to get insights (goals, personals, budget, audits), but after, it would be good to focus on assembling my team (start with SEO specialist, then perhaps an email marketer?). Also need to brainstorm on tooling.',
+          color: 'bg-blue-100'
+        },
+        {
+          id: '3',
+          title: 'Email A/B Tests',
+          content: '- Subject lines\n- Sender\n- CTA\n- Sending times',
+          color: 'bg-pink-100'
+        },
+        {
+          id: '4',
+          title: 'Banner Ads',
+          content: 'Notes from the workshop:\n- Sizing matters\n- Choose distinctive imagery\n- The landing page must match the display ad',
+          color: 'bg-orange-100'
+        }
+      ];
+      
+      // Add sample notes one by one to ensure correct IDs
+      sampleNotes.forEach(note => {
+        addNote(note);
+      });
+    }
+  }, [notes.length, addNote]);
 
   const handleAddNote = () => {
     if (newNote.title.trim() === '') return;
@@ -69,48 +103,18 @@ const StickyWallPage = () => {
   ];
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center">
-          <h1 className="text-3xl font-bold text-gray-800">Sticky Wall</h1>
-          {notes.length > 0 && (
-            <div className="ml-4 px-3 py-1 bg-primary bg-opacity-10 text-primary rounded-md text-lg">
-              {notes.length}
-            </div>
-          )}
-        </div>
-        
-        <button
-          onClick={() => setShowNewNoteForm(true)}
-          className="px-4 py-2 bg-primary text-white rounded-md shadow-sm hover:bg-primary-dark transition-colors flex items-center"
-        >
-          <FiPlus className="mr-2" />
-          Add Note
-        </button>
+    <div className="p-8 flex flex-col h-[calc(100vh-64px)]">
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold text-gray-800">Sticky Wall</h1>
       </div>
 
-      {notes.length === 0 ? (
-        <div className="flex flex-col items-center justify-center mt-16 text-center">
-          <div className="bg-gray-100 rounded-full p-6 mb-6">
-            <FiFileText className="h-12 w-12 text-gray-400" />
-          </div>
-          <h2 className="text-2xl font-semibold text-gray-700 mb-2">No sticky notes yet</h2>
-          <p className="text-gray-500 mb-8 max-w-md">Create your first note to start organizing your thoughts and ideas.</p>
-          <button 
-            onClick={() => setShowNewNoteForm(true)}
-            className="px-6 py-3 bg-primary text-white rounded-md shadow-sm hover:bg-primary-dark transition-colors"
-          >
-            <FiPlus className="inline-block mr-2" />
-            Create your first note
-          </button>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="border border-gray-200 rounded-lg p-6 bg-white flex-grow">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 h-full auto-rows-fr">
           {/* Render existing notes */}
           {notes.map((note) => (
             <div
               key={note.id}
-              className={`${note.color} p-6 rounded-lg border border-gray-200 shadow-sm min-h-[240px] overflow-auto relative group transition-all hover:shadow-md`}
+              className={`${note.color} p-6 rounded-lg border border-gray-200 shadow-sm overflow-auto relative group transition-all hover:shadow-md flex flex-col`}
             >
               <div className="absolute top-3 right-3 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button 
@@ -128,12 +132,20 @@ const StickyWallPage = () => {
                   <FiTrash2 className="h-4 w-4" />
                 </button>
               </div>
-              <h3 className="font-bold text-lg mb-3 pr-16">{note.title}</h3>
-              <div className="whitespace-pre-line leading-relaxed text-gray-700">{note.content}</div>
+              <h3 className="font-bold text-lg mb-4">{note.title}</h3>
+              <div className="whitespace-pre-line leading-relaxed text-gray-700 flex-grow">{note.content}</div>
             </div>
           ))}
+          
+          {/* Add note button */}
+          <div
+            onClick={() => setShowNewNoteForm(true)}
+            className="bg-gray-100 p-6 rounded-lg border border-gray-200 shadow-sm flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors"
+          >
+            <div className="text-4xl text-gray-400">+</div>
+          </div>
         </div>
-      )}
+      </div>
           
       {/* New note form (only shown when adding a new note) */}
       {showNewNoteForm && (
