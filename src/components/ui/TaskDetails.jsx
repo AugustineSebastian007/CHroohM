@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { format } from 'date-fns';
-import { FiX, FiTrash2, FiCalendar, FiClock, FiTag, FiPlus, FiChevronDown, FiCheck } from 'react-icons/fi';
+import { FiX, FiTrash2, FiCalendar, FiClock, FiTag, FiPlus, FiChevronDown, FiCheck, FiBell } from 'react-icons/fi';
 import useTaskStore from '../../store/useTaskStore';
+import { useNotification } from '../../context/NotificationContext';
 
 const TaskDetails = ({ taskId, onClose }) => {
   const tasks = useTaskStore(state => state.tasks);
@@ -10,6 +11,7 @@ const TaskDetails = ({ taskId, onClose }) => {
   const addTask = useTaskStore(state => state.addTask);
   const storeTags = useTaskStore(state => state.tags);
   const addTag = useTaskStore(state => state.addTag);
+  const { showSuccess } = useNotification();
   
   const [task, setTask] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -19,6 +21,7 @@ const TaskDetails = ({ taskId, onClose }) => {
     description: '',
     dueDate: '',
     dueTime: '',
+    reminderTime: '',
     list: 'Personal',
     tags: [],
     subtasks: 0,
@@ -27,6 +30,7 @@ const TaskDetails = ({ taskId, onClose }) => {
   
   const [showCalendar, setShowCalendar] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
+  const [showReminderTimePicker, setShowReminderTimePicker] = useState(false);
   const [showTagSelector, setShowTagSelector] = useState(false);
   const [newTagName, setNewTagName] = useState('');
   const [selectedTagColor, setSelectedTagColor] = useState('bg-accent1');
@@ -34,6 +38,7 @@ const TaskDetails = ({ taskId, onClose }) => {
   
   const calendarRef = useRef(null);
   const timePickerRef = useRef(null);
+  const reminderTimePickerRef = useRef(null);
   const tagSelectorRef = useRef(null);
   
   // Available colors for tags
@@ -77,6 +82,7 @@ const TaskDetails = ({ taskId, onClose }) => {
         description: '',
         dueDate: '',
         dueTime: '',
+        reminderTime: '',
         list: 'Personal',
         tags: [],
         subtasks: 0,
@@ -92,6 +98,7 @@ const TaskDetails = ({ taskId, onClose }) => {
         description: '',
         dueDate: `${day}-${month}-${year}`,
         dueTime: '',
+        reminderTime: '',
         list: 'Personal',
         tags: [],
         subtasks: 0,
@@ -122,6 +129,7 @@ const TaskDetails = ({ taskId, onClose }) => {
           description: foundTask.description || '',
           dueDate: dueDate,
           dueTime: dueTime || foundTask.dueTime || '',
+          reminderTime: foundTask.reminderTime || '',
           list: foundTask.list || 'Personal',
           tags: foundTask.tags || [],
           subtasks: foundTask.subtasks || 0,
@@ -139,6 +147,9 @@ const TaskDetails = ({ taskId, onClose }) => {
       }
       if (timePickerRef.current && !timePickerRef.current.contains(event.target)) {
         setShowTimePicker(false);
+      }
+      if (reminderTimePickerRef.current && !reminderTimePickerRef.current.contains(event.target)) {
+        setShowReminderTimePicker(false);
       }
       if (tagSelectorRef.current && !tagSelectorRef.current.contains(event.target)) {
         setShowTagSelector(false);
@@ -177,12 +188,20 @@ const TaskDetails = ({ taskId, onClose }) => {
       subtasks: editedTask.subtasksList.length,
     };
     
+    const isTaskWithReminder = !!editedTask.reminderTime && !!editedTask.dueDate;
+    
     if (isNewTask) {
       // Add new task
       addTask(updatedTask);
+      if (isTaskWithReminder) {
+        showSuccess('Task created with reminder!');
+      }
     } else {
       // Update existing task
       updateTask(taskId, updatedTask);
+      if (isTaskWithReminder) {
+        showSuccess('Task updated with reminder!');
+      }
     }
     
     handleClose();
@@ -297,6 +316,51 @@ const TaskDetails = ({ taskId, onClose }) => {
     const formattedHour = hour.toString().padStart(2, '0');
     return `${formattedHour}:${minute}`;
   });
+
+  const handleReminderTimeSelect = (timeString) => {
+    setEditedTask({ ...editedTask, reminderTime: timeString });
+    setShowReminderTimePicker(false);
+  };
+  
+  const clearReminderTime = () => {
+    setEditedTask({ ...editedTask, reminderTime: '' });
+  };
+  
+  // Additional time options for the reminder times
+  const reminderTimeOptions = [
+    { label: '15 minutes before', value: (current) => {
+      if (!current || !current.dueTime) return '';
+      const [h, m] = current.dueTime.split(':').map(Number);
+      let newM = m - 15;
+      let newH = h;
+      if (newM < 0) {
+        newM = 60 + newM;
+        newH = h - 1;
+        if (newH < 0) newH = 23;
+      }
+      return `${String(newH).padStart(2, '0')}:${String(newM).padStart(2, '0')}`;
+    }},
+    { label: '30 minutes before', value: (current) => {
+      if (!current || !current.dueTime) return '';
+      const [h, m] = current.dueTime.split(':').map(Number);
+      let newM = m - 30;
+      let newH = h;
+      if (newM < 0) {
+        newM = 60 + newM;
+        newH = h - 1;
+        if (newH < 0) newH = 23;
+      }
+      return `${String(newH).padStart(2, '0')}:${String(newM).padStart(2, '0')}`;
+    }},
+    { label: '1 hour before', value: (current) => {
+      if (!current || !current.dueTime) return '';
+      const [h, m] = current.dueTime.split(':').map(Number);
+      let newH = h - 1;
+      if (newH < 0) newH = 23;
+      return `${String(newH).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+    }},
+    { label: 'Day before (9:00 AM)', value: () => '09:00' },
+  ];
 
   return (
     <div className={`task-details-panel-wrapper ${isPanelOpen ? 'open' : ''}`}>
@@ -596,6 +660,68 @@ const TaskDetails = ({ taskId, onClose }) => {
                     className="h-5 w-5 rounded border-gray-300 cursor-pointer"
                   />
                   <span className="text-sm text-gray-500">Subtask</span>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-4 items-center">
+            <label className="text-gray-600">
+              <FiBell className="inline mr-2" />
+              Reminder
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Set reminder time"
+                value={editedTask.reminderTime}
+                onChange={(e) => setEditedTask({ ...editedTask, reminderTime: e.target.value })}
+                onClick={() => setShowReminderTimePicker(!showReminderTimePicker)}
+                className="w-full p-2 pr-8 border border-gray-200 rounded-md appearance-none focus:outline-none text-gray-700 bg-gray-100"
+              />
+              {editedTask.reminderTime && (
+                <button 
+                  onClick={clearReminderTime}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-500"
+                  aria-label="Clear reminder time"
+                >
+                  <FiX className="h-4 w-4" />
+                </button>
+              )}
+              {showReminderTimePicker && (
+                <div className="absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-auto" ref={reminderTimePickerRef}>
+                  <div className="p-2 border-b border-gray-200">
+                    <h4 className="text-xs font-medium text-gray-500 mb-1">Preset Times</h4>
+                    {reminderTimeOptions.map((option, index) => (
+                      <button 
+                        key={index}
+                        onClick={() => handleReminderTimeSelect(option.value(editedTask))}
+                        className="w-full text-left px-2 py-1.5 text-sm text-gray-700 hover:bg-gray-100 rounded"
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="p-2">
+                    <h4 className="text-xs font-medium text-gray-500 mb-1">Custom Time</h4>
+                    <div className="grid grid-cols-4 gap-1">
+                      {Array.from({ length: 24 }).map((_, hour) => (
+                        [0, 15, 30, 45].map((minute) => (
+                          <button
+                            key={`${hour}-${minute}`}
+                            onClick={() => 
+                              handleReminderTimeSelect(
+                                `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`
+                              )
+                            }
+                            className="px-1.5 py-1 text-xs text-gray-700 hover:bg-gray-100 rounded"
+                          >
+                            {String(hour).padStart(2, '0')}:{String(minute).padStart(2, '0')}
+                          </button>
+                        ))
+                      ))}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>

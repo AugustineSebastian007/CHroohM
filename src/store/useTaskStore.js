@@ -130,6 +130,16 @@ const useTaskStore = create(
         }
       },
       
+      // Set reminder for a task
+      setTaskReminder: async (taskId, reminderTime) => {
+        return get().updateTask(taskId, { reminderTime });
+      },
+      
+      // Remove reminder from a task
+      removeTaskReminder: async (taskId) => {
+        return get().updateTask(taskId, { reminderTime: null });
+      },
+      
       // Toggle task completion status
       toggleTaskComplete: async (taskId) => {
         const task = get().tasks.find((t) => t.id === taskId);
@@ -334,6 +344,13 @@ const useTaskStore = create(
             return false;
           }
         });
+      },
+      
+      // Get tasks with upcoming reminders
+      getTasksWithReminders: () => {
+        return get().tasks.filter(task => 
+          task.reminderTime && task.dueDate && !task.completed
+        );
       },
       
       // Reset all tasks (clear the task list)
