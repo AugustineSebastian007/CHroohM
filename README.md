@@ -41,7 +41,7 @@ The app integrates with the [DummyJSON API](https://dummyjson.com/docs/todos) fo
 
 1. Clone the repository
 ```
-git clone https://github.com/yourusername/organic-mind.git
+git clone https://github.com/augustinesebastian007/organic-mind.git
 cd organic-mind
 ```
 
